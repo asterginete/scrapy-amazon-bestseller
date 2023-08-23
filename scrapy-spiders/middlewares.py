@@ -3,13 +3,28 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import random
 from scrapy import signals
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
 
-class ScrapyAmazonBestsellerSpiderMiddleware:
+class UserAgentRotationMiddleware:
+    # List of user agents
+    USER_AGENTS = [
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15',
+        # ... you can add more user agents to this list
+    ]
+
+    def process_request(self, request, spider):
+        user_agent = random.choice(self.USER_AGENTS)
+        request.headers['User-Agent'] = user_agent
+
+
+class GeneralSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
     # passed objects.
@@ -56,7 +71,7 @@ class ScrapyAmazonBestsellerSpiderMiddleware:
         spider.logger.info("Spider opened: %s" % spider.name)
 
 
-class ScrapyAmazonBestsellerDownloaderMiddleware:
+class GeneralDownloaderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
