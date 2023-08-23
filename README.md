@@ -1,12 +1,14 @@
-# Amazon Best Sellers Scraper
+# Scrapy Web Scrapers for Amazon and Etsy
 
-This scraper is built using the Scrapy framework and is designed to extract the top 10 items from various best seller categories on Amazon.
+This project contains Scrapy spiders designed to extract data from Amazon's Best Sellers and Etsy's category pages.
 
 ## Features
 
-- Reads a list of Amazon best seller URLs from a text file.
-- Extracts the top 10 items from each provided category.
-- Outputs the scraped data to a CSV file.
+- **Amazon Best Sellers Spider**: Extracts the top 10 items from various best seller categories on Amazon.
+- **Etsy Category Spider**: Scrapes all visible attributes of items from provided Etsy category pages.
+- **User Agent Rotation**: Uses a rotation of user agents to reduce the risk of being blocked.
+- **Logging Pipeline**: Logs the scraped items for debugging purposes.
+- **Database Storage Pipeline (Placeholder)**: A skeleton pipeline for storing scraped items in a database.
 
 ## Prerequisites
 
@@ -16,29 +18,33 @@ This scraper is built using the Scrapy framework and is designed to extract the 
 ## Setup
 
 1. **Install Scrapy**:
-   If you haven't installed Scrapy yet, you can do so using pip:
    ```bash
    pip install scrapy
    ```
 
-2. **Provide the Amazon Best Seller URLs**:
-   Add the desired Amazon best seller URLs to the `amazon_links.txt` file, one URL per line.
+2. **Provide the URLs**:
+   - For Amazon: Add the desired Amazon best seller URLs to the `amazon_links.txt` file, one URL per line.
+   - For Etsy: Add the desired Etsy category URLs to the `etsy_links.txt` file, one URL per line.
 
 ## Usage
 
-1. Navigate to the root directory of the Scrapy project.
-2. Run the spider using the following command:
+1. **Run the Amazon Spider**:
    ```bash
    scrapy crawl amazon_bestsellers
    ```
 
-3. Once the spider completes its run, you'll find the scraped data in `amazon_bestsellers.csv`.
+2. **Run the Etsy Spider**:
+   ```bash
+   scrapy crawl etsy_scraper
+   ```
+
+3. **Output**: Once the spiders complete their runs, you'll find the scraped data in CSV files (`amazon_bestsellers.csv` and `etsy_items.csv`).
 
 ## Notes
 
-- Amazon frequently changes its website structure. The scraper might require adjustments based on any changes made to the Amazon page.
-- Web scraping might be against Amazon's terms of service. Always ensure you have the right to scrape a website and respect `robots.txt`.
-- Amazon might block or throttle requests from scrapers. Consider using middlewares to rotate user agents or proxies, and handle CAPTCHAs for a more robust solution.
+- Web structures can change over time. The spiders might require adjustments based on any changes made to the Amazon or Etsy pages.
+- Web scraping might be against the terms of service of some websites. Always ensure you have the right to scrape a website and respect `robots.txt`.
+- Consider using additional middlewares to handle CAPTCHAs, use proxies, or implement other anti-blocking strategies for a more robust solution.
 
 ## License
 
